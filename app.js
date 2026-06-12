@@ -344,6 +344,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
   ctx.fillStyle = "#fff";
   ctx.fillRect(646, 864, 118, 118);
   ctx.drawImage(qrImage, 646, 864, 118, 118);
+  ctx.fillStyle = "#17130f";
   ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText("扫码来测你的 UGTI", 610, 1004);
 
