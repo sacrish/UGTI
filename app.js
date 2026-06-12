@@ -150,9 +150,6 @@ function renderResult() {
 }
 
 function getResultImagePath(result) {
-  if (result.image && !result.image.includes("personality-placeholder")) {
-    return result.image;
-  }
   return `./assets/personality-${result.id}.png`;
 }
 
@@ -174,242 +171,203 @@ function withCacheBust(src) {
   return `${src}${separator}v=${Date.now()}`;
 }
 
-function assetHref(src) {
-  return new URL(withCacheBust(src), window.location.href).href;
-}
-
-function escapeSvg(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
 function stripMarkdown(value) {
   return value.replace(/\*\*/g, "");
 }
 
-function wrapText(value, maxChars, maxLines) {
-  const chars = Array.from(stripMarkdown(value));
-  const lines = [];
-  let line = "";
-
-  chars.forEach((char) => {
-    if (line.length >= maxChars && lines.length < maxLines - 1) {
-      lines.push(line);
-      line = char;
-    } else {
-      line += char;
-    }
-  });
-
-  if (line && lines.length < maxLines) {
-    lines.push(line);
-  }
-
-  if (chars.length > maxChars * maxLines) {
-    lines[lines.length - 1] = `${lines[lines.length - 1].slice(0, Math.max(0, maxChars - 1))}…`;
-  }
-
-  return lines;
-}
-
-function svgTextLines(lines, x, y, lineHeight, options = {}) {
-  const { className = "", anchor = "start" } = options;
-  return lines
-    .map((line, index) => {
-      const attrs = [`x="${x}"`, `y="${y + index * lineHeight}"`, `text-anchor="${anchor}"`];
-      if (className) attrs.push(`class="${className}"`);
-      return `<text ${attrs.join(" ")}>${escapeSvg(line)}</text>`;
-    })
-    .join("");
-}
-
-function renderShareSvg(options = {}) {
-  const result = state.result;
-  const resultImage = options.resultImage || assetHref(getResultImagePath(result));
-  const qrImage = options.qrImage || assetHref(qrCodePath);
-  const nameLines = wrapText(result.name, 5, 2);
-  const portraitLines = wrapText(result.portrait, 24, 6);
-  const sloganLines = wrapText(result.slogan, 16, 2);
-  const blessingLines = wrapText(
-    "测试仅供娱乐，希望每一位毕业生都能不被标签束缚，能够肆意洒脱地享受你的人生！",
-    28,
-    3
-  );
-
-  let tagX = 436;
-  let tagY = 472;
-  const tags = result.tags
-    .map((tag) => {
-      const width = Math.max(116, Array.from(tag).length * 24 + 28);
-      if (tagX + width > 762) {
-        tagX = 436;
-        tagY += 56;
-      }
-      const markup = `
-        <rect x="${tagX}" y="${tagY}" width="${width}" height="42" rx="8" fill="#38d7ff" stroke="#17130f" stroke-width="4"/>
-        <text x="${tagX + 14}" y="${tagY + 28}" class="tag">${escapeSvg(tag)}</text>
-      `;
-      tagX += width + 12;
-      return markup;
-    })
-    .join("");
-  const portraitY = Math.max(554, tagY + 76);
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1320" viewBox="0 0 900 1320">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff8ef"/>
-      <stop offset="0.48" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#f5f0ff"/>
-    </linearGradient>
-    <radialGradient id="blueGlow" cx="110" cy="180" r="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#38d7ff" stop-opacity="0.46"/>
-      <stop offset="1" stop-color="#38d7ff" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="limeGlow" cx="810" cy="140" r="330" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#b8f042" stop-opacity="0.48"/>
-      <stop offset="1" stop-color="#b8f042" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="cardBg" x1="0" y1="186" x2="804" y2="1016" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#fffaf1"/>
-      <stop offset="0.58" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#eefbff"/>
-    </linearGradient>
-    <style>
-      text { font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif; fill: #17130f; }
-      .title { font-size: 36px; font-weight: 900; }
-      .prefix { font-size: 24px; font-weight: 900; fill: #6f665c; }
-      .name { font-size: 62px; font-weight: 900; }
-      .tag { font-size: 24px; font-weight: 900; }
-      .portrait { font-size: 27px; font-weight: 700; fill: #312b25; }
-      .slogan { font-size: 28px; font-weight: 900; }
-      .qr-label { font-size: 19px; font-weight: 800; }
-      .blessing { font-size: 22px; font-weight: 700; fill: #6f665c; }
-      .credit { font-size: 18px; font-weight: 800; fill: rgba(23, 19, 15, 0.58); }
-    </style>
-  </defs>
-  <rect width="900" height="1320" fill="url(#bg)"/>
-  <rect width="900" height="1320" fill="url(#blueGlow)"/>
-  <rect width="900" height="1320" fill="url(#limeGlow)"/>
-  <rect x="36" y="36" width="828" height="1248" rx="24" fill="#fff8ef" fill-opacity="0.9" stroke="#17130f" stroke-width="4"/>
-  <text x="96" y="132" class="title">UGTI 大学毕业生人格测试</text>
-  <rect x="106" y="196" width="708" height="830" rx="18" fill="#ff5b4a" fill-opacity="0.22"/>
-  <rect x="96" y="186" width="708" height="830" rx="18" fill="url(#cardBg)" stroke="#17130f" stroke-width="4"/>
-  <rect x="136" y="238" width="260" height="260" rx="18" fill="#fff" stroke="#17130f" stroke-width="4"/>
-  <image href="${escapeSvg(resultImage)}" x="140" y="242" width="252" height="252" preserveAspectRatio="xMidYMid meet"/>
-  <text x="436" y="268" class="prefix">${escapeSvg(`${state.nickname} 的毕业人格是`)}</text>
-  ${svgTextLines(nameLines, 436, 346, 68, { className: "name" })}
-  ${tags}
-  ${svgTextLines(portraitLines, 136, portraitY, 48, { className: "portrait" })}
-  <rect x="136" y="888" width="500" height="82" fill="rgba(255,216,79,0.42)"/>
-  <rect x="136" y="888" width="8" height="82" fill="#ff5b4a"/>
-  ${svgTextLines(sloganLines, 166, 922, 36, { className: "slogan" })}
-  <rect x="646" y="864" width="118" height="118" fill="#fff"/>
-  <image href="${escapeSvg(qrImage)}" x="646" y="864" width="118" height="118" preserveAspectRatio="xMidYMid meet"/>
-  <text x="610" y="1004" class="qr-label">扫码来测你的 UGTI</text>
-  ${svgTextLines(blessingLines, 96, 1110, 38, { className: "blessing" })}
-  <text x="450" y="1204" text-anchor="middle" class="credit">Developed By</text>
-  <text x="450" y="1232" text-anchor="middle" class="credit">大连东软信息学院 数字艺术与设计学院</text>
-  <text x="450" y="1260" text-anchor="middle" class="credit">动画与数字媒体艺术系</text>
-</svg>`;
-}
-
-async function imageFileToDataUrl(src) {
-  const freshSrc = withCacheBust(src);
-
-  try {
-    const response = await fetch(freshSrc, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`图片加载失败：${src}`);
-    }
-    const blob = await response.blob();
-    return await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(new Error(`图片读取失败：${src}`));
-      reader.readAsDataURL(blob);
-    });
-  } catch (error) {
-    console.warn("通过 fetch 读取图片失败，尝试用图片元素读取。", error);
-    return imageElementToDataUrl(freshSrc);
-  }
-}
-
-function imageElementToDataUrl(src) {
+function loadImage(src) {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
-      try {
-        const canvas = document.createElement("canvas");
-        canvas.width = image.naturalWidth;
-        canvas.height = image.naturalHeight;
-        canvas.getContext("2d").drawImage(image, 0, 0);
-        resolve(canvas.toDataURL("image/png"));
-      } catch (error) {
-        reject(error);
-      }
-    };
+    image.crossOrigin = "anonymous";
+    image.onload = () => resolve(image);
     image.onerror = () => reject(new Error(`图片加载失败：${src}`));
     image.src = src;
   });
 }
 
-async function imageSourceToDataUrl(src) {
-  try {
-    return await imageFileToDataUrl(src);
-  } catch (freshError) {
-    console.warn("带缓存参数的图片读取失败，尝试原始图片路径。", freshError);
-    return imageElementToDataUrl(src);
-  }
+function roundedRect(ctx, x, y, width, height, radius, fill, stroke) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + width, y, x + width, y + height, radius);
+  ctx.arcTo(x + width, y + height, x, y + height, radius);
+  ctx.arcTo(x, y + height, x, y, radius);
+  ctx.arcTo(x, y, x + width, y, radius);
+  ctx.closePath();
+  if (fill) ctx.fill();
+  if (stroke) ctx.stroke();
 }
 
-function svgToPngUrl(svg) {
+function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+  const chars = Array.from(stripMarkdown(text));
+  let line = "";
+  let lines = 0;
+  for (const char of chars) {
+    const next = line + char;
+    if (ctx.measureText(next).width > maxWidth && line) {
+      ctx.fillText(line, x, y);
+      y += lineHeight;
+      lines += 1;
+      line = char;
+      if (lines >= maxLines) return y;
+    } else {
+      line = next;
+    }
+  }
+  if (line && lines < maxLines) {
+    ctx.fillText(line, x, y);
+    y += lineHeight;
+  }
+  return y;
+}
+
+function drawShareBackground(ctx, width, height) {
+  const bg = ctx.createLinearGradient(0, 0, width, height);
+  bg.addColorStop(0, "#fff8ef");
+  bg.addColorStop(0.48, "#ffffff");
+  bg.addColorStop(1, "#f5f0ff");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, width, height);
+
+  const blueGlow = ctx.createRadialGradient(110, 180, 10, 110, 180, 360);
+  blueGlow.addColorStop(0, "rgba(56, 215, 255, 0.46)");
+  blueGlow.addColorStop(1, "rgba(56, 215, 255, 0)");
+  ctx.fillStyle = blueGlow;
+  ctx.fillRect(0, 0, width, height);
+
+  const limeGlow = ctx.createRadialGradient(width - 90, 140, 10, width - 90, 140, 330);
+  limeGlow.addColorStop(0, "rgba(184, 240, 66, 0.48)");
+  limeGlow.addColorStop(1, "rgba(184, 240, 66, 0)");
+  ctx.fillStyle = limeGlow;
+  ctx.fillRect(0, 0, width, height);
+}
+
+function canvasToPngUrl(canvas) {
   return new Promise((resolve, reject) => {
-    const svgUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
-    const image = new Image();
-    image.onload = () => {
-      try {
-        const canvas = document.createElement("canvas");
-        canvas.width = 900;
-        canvas.height = 1320;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(image, 0, 0);
-        URL.revokeObjectURL(svgUrl);
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            reject(new Error("PNG 图片生成失败"));
-            return;
-          }
-          resolve(URL.createObjectURL(blob));
-        }, "image/png");
-      } catch (error) {
-        URL.revokeObjectURL(svgUrl);
-        reject(error);
-      }
-    };
-    image.onerror = () => {
-      URL.revokeObjectURL(svgUrl);
-      reject(new Error("分享图渲染失败"));
-    };
-    image.src = svgUrl;
+    try {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error("PNG 图片生成失败"));
+          return;
+        }
+        resolve(URL.createObjectURL(blob));
+      }, "image/png");
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 
-async function generateSharePngUrl() {
+async function generateShareImage() {
   const [resultImage, qrImage] = await Promise.all([
-    imageSourceToDataUrl(getResultImagePath(state.result)),
-    imageSourceToDataUrl(qrCodePath)
+    loadImage(withCacheBust(getResultImagePath(state.result))),
+    loadImage(withCacheBust(qrCodePath))
   ]);
-  const pngSvg = renderShareSvg({ resultImage, qrImage });
-  return svgToPngUrl(pngSvg);
+  const canvas = renderShareCanvas({ resultImage, qrImage });
+  return canvasToPngUrl(canvas);
 }
 
-function generateShareImage() {
-  const svg = renderShareSvg();
-  return { svg };
+function renderShareCanvas({ resultImage, qrImage }) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 900;
+  canvas.height = 1320;
+  const ctx = canvas.getContext("2d");
+  const result = state.result;
+
+  drawShareBackground(ctx, canvas.width, canvas.height);
+
+  ctx.fillStyle = "rgba(255, 248, 239, 0.9)";
+  ctx.strokeStyle = "#17130f";
+  ctx.lineWidth = 4;
+  roundedRect(ctx, 36, 36, 828, 1248, 24, true, true);
+
+  ctx.fillStyle = "#17130f";
+  ctx.font = "900 36px Microsoft YaHei, PingFang SC, sans-serif";
+  ctx.fillText("UGTI 大学毕业生人格测试", 96, 132);
+
+  ctx.fillStyle = "rgba(255, 91, 74, 0.22)";
+  roundedRect(ctx, 106, 196, 708, 830, 18, true, false);
+
+  const cardBg = ctx.createLinearGradient(96, 186, 804, 1016);
+  cardBg.addColorStop(0, "#fffaf1");
+  cardBg.addColorStop(0.58, "#ffffff");
+  cardBg.addColorStop(1, "#eefbff");
+  ctx.fillStyle = cardBg;
+  ctx.strokeStyle = "#17130f";
+  ctx.lineWidth = 4;
+  roundedRect(ctx, 96, 186, 708, 830, 18, true, true);
+
+  ctx.fillStyle = "#fff";
+  ctx.strokeStyle = "#17130f";
+  ctx.lineWidth = 4;
+  roundedRect(ctx, 136, 238, 260, 260, 18, true, true);
+  ctx.drawImage(resultImage, 140, 242, 252, 252);
+
+  ctx.fillStyle = "#6f665c";
+  ctx.font = "900 24px Microsoft YaHei, PingFang SC, sans-serif";
+  ctx.fillText(`${state.nickname} 的毕业人格是`, 436, 268);
+  ctx.fillStyle = "#17130f";
+  ctx.font = "900 62px Microsoft YaHei, PingFang SC, sans-serif";
+  const titleBottom = drawWrappedText(ctx, result.name, 436, 346, 310, 68, 2);
+
+  let x = 436;
+  let y = titleBottom + 8;
+  let tagBottom = y;
+  result.tags.forEach((tag) => {
+    ctx.font = "900 24px Microsoft YaHei, PingFang SC, sans-serif";
+    const width = ctx.measureText(tag).width + 28;
+    if (x + width > 762) {
+      x = 436;
+      y += 56;
+    }
+    ctx.fillStyle = "#38d7ff";
+    ctx.strokeStyle = "#17130f";
+    ctx.lineWidth = 4;
+    roundedRect(ctx, x, y, width, 42, 8, true, true);
+    ctx.fillStyle = "#17130f";
+    ctx.fillText(tag, x + 14, y + 28);
+    tagBottom = Math.max(tagBottom, y + 42);
+    x += width + 12;
+  });
+
+  ctx.font = "700 27px Microsoft YaHei, PingFang SC, sans-serif";
+  ctx.fillStyle = "#312b25";
+  drawWrappedText(ctx, result.portrait, 136, Math.max(554, tagBottom + 34), 608, 48, 6);
+
+  ctx.fillStyle = "rgba(255, 216, 79, 0.42)";
+  ctx.fillRect(136, 888, 500, 82);
+  ctx.fillStyle = "#ff5b4a";
+  ctx.fillRect(136, 888, 8, 82);
+  ctx.fillStyle = "#17130f";
+  ctx.font = "900 28px Microsoft YaHei, PingFang SC, sans-serif";
+  drawWrappedText(ctx, result.slogan, 166, 922, 430, 36, 2);
+
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(646, 864, 118, 118);
+  ctx.drawImage(qrImage, 646, 864, 118, 118);
+  ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
+  ctx.fillText("扫码来测你的 UGTI", 610, 1004);
+
+  ctx.fillStyle = "#6f665c";
+  ctx.font = "700 22px Microsoft YaHei, PingFang SC, sans-serif";
+  drawWrappedText(
+    ctx,
+    "测试仅供娱乐，希望每一位毕业生都能不被标签束缚，能够肆意洒脱地享受你的人生！",
+    96,
+    1110,
+    708,
+    38,
+    3
+  );
+
+  ctx.fillStyle = "rgba(23, 19, 15, 0.58)";
+  ctx.font = "800 18px Microsoft YaHei, PingFang SC, sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("Developed By", canvas.width / 2, 1204);
+  ctx.fillText("大连东软信息学院 数字艺术与设计学院", canvas.width / 2, 1232);
+  ctx.fillText("动画与数字媒体艺术系", canvas.width / 2, 1260);
+  ctx.textAlign = "left";
+
+  return canvas;
 }
 
 els.nickname.addEventListener("input", () => {
@@ -463,9 +421,9 @@ els.shareBtn.addEventListener("click", async () => {
       URL.revokeObjectURL(state.shareUrl);
       state.shareUrl = null;
     }
-    const shareImage = generateShareImage();
-    els.shareImage.innerHTML = shareImage.svg;
-    els.downloadShare.href = "#";
+    state.shareUrl = await generateShareImage();
+    els.shareImage.src = state.shareUrl;
+    els.downloadShare.href = state.shareUrl;
     els.shareModal.hidden = false;
   } catch (error) {
     console.error("分享图生成失败：", error);
@@ -473,30 +431,6 @@ els.shareBtn.addEventListener("click", async () => {
   } finally {
     els.shareBtn.textContent = originalText;
     els.shareBtn.disabled = false;
-  }
-});
-
-els.downloadShare.addEventListener("click", async (event) => {
-  event.preventDefault();
-  const originalText = els.downloadShare.textContent;
-  els.downloadShare.textContent = "保存中...";
-  try {
-    if (state.shareUrl) {
-      URL.revokeObjectURL(state.shareUrl);
-      state.shareUrl = null;
-    }
-    state.shareUrl = await generateSharePngUrl();
-    const link = document.createElement("a");
-    link.href = state.shareUrl;
-    link.download = els.downloadShare.download || "UGTI-大学毕业生人格测试.png";
-    document.body.append(link);
-    link.click();
-    link.remove();
-  } catch (error) {
-    console.error("PNG 保存失败：", error);
-    window.alert("PNG 保存失败。请通过本地 HTTP 服务打开页面后重试。");
-  } finally {
-    els.downloadShare.textContent = originalText;
   }
 });
 
