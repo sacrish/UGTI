@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="UGTI logo">
+  <rect x="14" y="14" width="92" height="92" rx="18" fill="#b8f042" stroke="#17130f" stroke-width="8"/>
+  <circle cx="88" cy="40" r="22" fill="#38d7ff" stroke="#17130f" stroke-width="6"/>
+  <path d="M34 38v34c0 17 11 27 30 27s30-10 30-27V38H78v34c0 8-5 13-14 13s-14-5-14-13V38z" fill="#17130f"/>
+</svg>

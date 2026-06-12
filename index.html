@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UGTI 大学毕业生人格测试</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage" aria-live="polite">
+        <div class="geo geo-a"></div>
+        <div class="geo geo-b"></div>
+        <div class="geo geo-c"></div>
+
+        <header class="topbar">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="./assets/logo.svg" alt="" />
+          </div>
+          <div>
+            <p class="brand-title">UGTI</p>
+            <p class="brand-subtitle">大学毕业生人格测试</p>
+          </div>
+        </header>
+
+        <section id="welcomeView" class="view view-active">
+          <div class="welcome-content">
+            <div class="hero-copy">
+              <h1>欢迎参加 UGTI 大学毕业生人格测试！</h1>
+              <p>大学四年将要落幕<br />新的人生即要启程<br />测测你是什么大学人格？</p>
+            </div>
+            <form id="startForm" class="start-form">
+              <label for="nickname">你的称呼</label>
+              <input id="nickname" type="text" maxlength="16" autocomplete="nickname" placeholder="例如：阿晴" />
+              <button id="startBtn" class="primary-btn" type="submit" disabled>开始测试</button>
+            </form>
+          </div>
+          <footer class="credit">
+            <span>Developed By</span>
+            <span>大连东软信息学院 数字艺术与设计学院</span>
+            <span>动画与数字媒体艺术系</span>
+          </footer>
+        </section>
+
+        <section id="quizView" class="view">
+          <div class="progress-wrap" aria-label="答题进度">
+            <div class="progress-meta">
+              <span id="progressText">第 1 / 16 题</span>
+              <span id="progressPercent">6%</span>
+            </div>
+            <div class="progress-track">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+          </div>
+
+          <article class="question-card">
+            <p id="questionIndex" class="question-index">Question 01</p>
+            <h2 id="questionTitle"></h2>
+            <div id="options" class="options"></div>
+          </article>
+
+          <nav class="quiz-nav" aria-label="题目导航">
+            <button id="prevBtn" class="ghost-btn" type="button">上一题</button>
+            <button id="nextBtn" class="primary-btn" type="button" disabled>下一题</button>
+          </nav>
+        </section>
+
+        <section id="resultView" class="view">
+          <article id="resultCard" class="result-card">
+            <div class="result-visual">
+              <img id="resultImage" src="./assets/personality-placeholder.png" alt="人格形象图片" />
+            </div>
+            <div class="result-copy">
+              <p id="resultNamePrefix" class="result-name-prefix"></p>
+              <h2 id="resultName"></h2>
+              <div id="resultTags" class="tags"></div>
+              <div id="resultPortrait" class="portrait"></div>
+              <p id="resultSlogan" class="slogan"></p>
+              <p class="blessing">测试仅供娱乐，希望每一位毕业生都能不被标签束缚，能够肆意洒脱地享受你的人生！</p>
+            </div>
+          </article>
+
+          <div class="result-actions">
+            <button id="shareBtn" class="primary-btn" type="button">分享结果</button>
+            <button id="restartBtn" class="ghost-btn" type="button">重新测试</button>
+          </div>
+          <footer class="credit result-credit">
+            <span>Developed By</span>
+            <span>大连东软信息学院 数字艺术与设计学院</span>
+            <span>动画与数字媒体艺术系</span>
+          </footer>
+        </section>
+      </section>
+    </main>
+
+    <div id="shareModal" class="share-modal" hidden>
+      <div class="share-dialog" role="dialog" aria-modal="true" aria-label="分享图片预览">
+        <button id="closeShareBtn" class="close-btn" type="button" aria-label="关闭分享图片">×</button>
+        <img id="shareImage" alt="测试结果分享图" />
+        <a id="downloadShare" class="primary-btn" download="UGTI-大学毕业生人格测试.png">保存图片</a>
+      </div>
+    </div>
+
+    <script src="./config/content.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
