@@ -12,7 +12,7 @@ window.UGTI_CONFIG = {
     {
       id: "ddl",
       name: "DDL战神",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-ddl.png",
       tags: ["极限抗压", "卡点之王", "拖延满级选手"],
       portrait: "**不到最后一刻绝不动手**，是你刻在骨子里的大学生法则。平时佛系松弛，截止日前直接开挂，专注力、爆发力瞬间拉满。别人熬夜焦虑赶工，你极限卡点高质量完工，主打拖延但绝不翻车，是大学里最传奇的极限操作大师。",
       slogan: "一切都来得及！极限创造奇迹！",
@@ -21,7 +21,7 @@ window.UGTI_CONFIG = {
     {
       id: "mystery",
       name: "校园神秘人",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-mystery.png",
       tags: ["低调隐身", "行踪成谜", "小众独处", "清冷慢热"],
       portrait: "班级群潜水常客，课堂低调坐角落，平时行踪飘忽不定。不爱凑热闹、不主动社交，存在感不高但极具个人节奏。看似冷冷清清，实则内心通透清醒，默默过完四年大学生活，安静蓄力，悄悄优秀。",
       slogan: "静守本心，默默生辉，自成山海。",
@@ -30,7 +30,7 @@ window.UGTI_CONFIG = {
     {
       id: "ootder",
       name: "校园OOTDER",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-ootder.png",
       tags: ["校园穿搭卷王", "氛围感达人", "审美在线", "精致随性"],
       portrait: "你不一定卷绩点，但一定卷穿搭。日常出门精致得体，穿搭审美在线，擅长用穿搭治愈校园平淡日常。不随波逐流、风格独特，是行走的校园氛围感天花板，把普通的校园日常过成专属时尚大片。",
       slogan: "穿搭有度，自有风格，岁岁精致。",
@@ -39,7 +39,7 @@ window.UGTI_CONFIG = {
     {
       id: "reliable",
       name: "最强大腿",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-reliable.png",
       tags: ["小组兜底王", "全员抱大腿", "靠谱天花板", "团队救世主"],
       portrait: "用实力说话，全系公认的万能大腿，只要有你在，小组作业、课程展示、竞赛项目直接稳了。执行力强、实力能打、从不甩锅。大学四年，承包了无数的高分，是全员争相抱紧的靠谱战神。努力就是雕塑自己，今天的自己比昨天更强了呢！",
       slogan: "实力兜底前行，奔赴万丈前程。",
@@ -48,7 +48,7 @@ window.UGTI_CONFIG = {
     {
       id: "mature",
       name: "二旬大学生",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-mature.png",
       tags: ["心态老成", "人间清醒", "早熟通透", "佛系淡然"],
       portrait: "明明二十出头，却拥有三四十岁的成熟心态。看透内卷套路，拒绝无谓焦虑，不跟风内耗、不盲目攀比。待人处事稳重通透，情绪极度稳定，比同龄人更清醒、更克制，是大学里少见的“早熟型”通透选手。",
       slogan: "清醒自持，步履从容。",
@@ -57,7 +57,7 @@ window.UGTI_CONFIG = {
     {
       id: "melancholy",
       name: "忧郁小猫猫",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-melancholy.png",
       tags: ["细腻敏感", "温柔哀人", "情绪浪漫", "易碎温柔"],
       portrait: "外表安静温顺，内心细腻柔软。共情能力超强，容易多想、偶尔emo，自带淡淡的忧郁氛围感。善良温柔、心思细腻，擅长治愈别人，却常常悄悄自愈自己。是校园里温柔又独特的易碎系浪漫选手。",
       slogan: "温柔自愈成长，微光亦可向阳。",
@@ -66,7 +66,7 @@ window.UGTI_CONFIG = {
     {
       id: "sunny",
       name: "阳光开朗大学生",
-      image: "./assets/personality-placeholder.png",
+      image: "./assets/personality-sunny.png",
       tags: ["乐天派本体", "治愈系暖男/女", "积极元气", "永不内耗"],
       portrait: "校园正能量担当，主打一个心态超好、永远乐观。遇事不emo、受挫不摆烂，爱笑、爱分享、元气满满。能自愈、懂包容，用积极的情绪感染身边所有人，是照亮整个宿舍与班级的小太阳。",
       slogan: "心怀阳光，明朗坦荡，逐光而行。",

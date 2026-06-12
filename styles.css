@@ -485,12 +485,19 @@ a {
   gap: 14px;
 }
 
-.share-dialog img {
+.share-preview {
   width: 100%;
   border: 2px solid var(--ink);
   border-radius: 16px;
   background: #fff;
   box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.share-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .close-btn {
