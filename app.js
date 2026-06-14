@@ -146,7 +146,7 @@ function renderResult() {
   els.resultSlogan.textContent = state.result.slogan;
   els.resultImage.src = withCacheBust(imagePath);
   els.resultImage.alt = `${state.result.name} 人格形象图片`;
-  UGTI_QR.drawToCanvas(els.resultQr, window.location.href);
+  UGTI_QR.drawToCanvas(els.resultQr, getQrTargetUrl());
   syncStageHeight();
 }
 
@@ -170,6 +170,13 @@ function withCacheBust(src) {
   if (src.startsWith("data:")) return src;
   const separator = src.includes("?") ? "&" : "?";
   return `${src}${separator}v=${Date.now()}`;
+}
+
+function getQrTargetUrl() {
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.hash = "";
+  return url.toString();
 }
 
 function stripMarkdown(value) {
@@ -335,7 +342,7 @@ function renderShareCanvas({ resultImage }) {
   ctx.font = "900 28px Microsoft YaHei, PingFang SC, sans-serif";
   drawWrappedText(ctx, result.slogan, 166, 922, 430, 36, 2);
 
-  UGTI_QR.drawToContext(ctx, window.location.href, 646, 864, 118);
+  UGTI_QR.drawToContext(ctx, getQrTargetUrl(), 646, 864, 118);
   ctx.fillStyle = "#17130f";
   ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText("扫码来测你的 UGTI", 610, 1004);
