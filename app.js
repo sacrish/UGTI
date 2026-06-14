@@ -2,7 +2,6 @@ const config = window.UGTI_CONFIG;
 const questions = config.questions;
 const results = config.results;
 const resultOrder = config.resultOrder;
-const qrCodePath = "./assets/qr.png";
 
 const state = {
   nickname: "",
@@ -34,6 +33,7 @@ const els = {
   resultTags: document.querySelector("#resultTags"),
   resultPortrait: document.querySelector("#resultPortrait"),
   resultSlogan: document.querySelector("#resultSlogan"),
+  resultQr: document.querySelector("#resultQr"),
   restartBtn: document.querySelector("#restartBtn"),
   shareBtn: document.querySelector("#shareBtn"),
   shareModal: document.querySelector("#shareModal"),
@@ -146,6 +146,7 @@ function renderResult() {
   els.resultSlogan.textContent = state.result.slogan;
   els.resultImage.src = withCacheBust(imagePath);
   els.resultImage.alt = `${state.result.name} 人格形象图片`;
+  UGTI_QR.drawToCanvas(els.resultQr, window.location.href);
   syncStageHeight();
 }
 
@@ -258,15 +259,12 @@ function canvasToPngUrl(canvas) {
 }
 
 async function generateShareImage() {
-  const [resultImage, qrImage] = await Promise.all([
-    loadImage(withCacheBust(getResultImagePath(state.result))),
-    loadImage(withCacheBust(qrCodePath))
-  ]);
-  const canvas = renderShareCanvas({ resultImage, qrImage });
+  const resultImage = await loadImage(withCacheBust(getResultImagePath(state.result)));
+  const canvas = renderShareCanvas({ resultImage });
   return canvasToPngUrl(canvas);
 }
 
-function renderShareCanvas({ resultImage, qrImage }) {
+function renderShareCanvas({ resultImage }) {
   const canvas = document.createElement("canvas");
   canvas.width = 900;
   canvas.height = 1320;
@@ -337,9 +335,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
   ctx.font = "900 28px Microsoft YaHei, PingFang SC, sans-serif";
   drawWrappedText(ctx, result.slogan, 166, 922, 430, 36, 2);
 
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(646, 864, 118, 118);
-  ctx.drawImage(qrImage, 646, 864, 118, 118);
+  UGTI_QR.drawToContext(ctx, window.location.href, 646, 864, 118);
   ctx.fillStyle = "#17130f";
   ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText("扫码来测你的 UGTI", 610, 1004);

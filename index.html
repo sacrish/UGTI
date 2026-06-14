@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UGTI 大学毕业生人格测试</title>
     <link rel="icon" href="./assets/favicon.svg?v=e572785f09d8" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=d589f1ef88f1" />
+    <link rel="stylesheet" href="./styles.css?v=a188cb5756de" />
   </head>
   <body>
     <main class="app-shell">
@@ -85,6 +85,10 @@
             <button id="shareBtn" class="primary-btn" type="button">分享结果</button>
             <button id="restartBtn" class="ghost-btn" type="button">重新测试</button>
           </div>
+          <div class="result-qr">
+            <canvas id="resultQr" width="164" height="164" aria-label="当前页面二维码"></canvas>
+            <p>扫码来测你的 UGTI</p>
+          </div>
           <footer class="credit result-credit">
             <span>Developed By</span>
             <span>大连东软信息学院 数字艺术与设计学院</span>
@@ -103,6 +107,7 @@
     </div>
 
     <script src="./config/content.js?v=7b0a547c36ee"></script>
-    <script src="./app.js?v=68ee38939ec8"></script>
+    <script src="./qr.js?v=c66b44b103f0"></script>
+    <script src="./app.js?v=fb80d5345b81"></script>
   </body>
 </html>

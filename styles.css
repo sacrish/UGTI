@@ -332,6 +332,29 @@ a {
   flex: 1;
 }
 
+.result-qr {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.result-qr canvas {
+  width: 118px;
+  height: 118px;
+  padding: 8px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.result-qr p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
 .result-card {
   display: grid;
   grid-template-columns: 300px 1fr;
