@@ -296,11 +296,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
   ctx.lineWidth = 4;
   roundedRect(ctx, 96, 186, 708, 830, 18, true, true);
 
-  ctx.fillStyle = "#fff";
-  ctx.strokeStyle = "#17130f";
-  ctx.lineWidth = 4;
-  roundedRect(ctx, 136, 238, 260, 260, 18, true, true);
-  ctx.drawImage(resultImage, 140, 242, 252, 252);
+  ctx.drawImage(resultImage, 136, 238, 260, 260);
 
   ctx.fillStyle = "#6f665c";
   ctx.font = "900 24px Microsoft YaHei, PingFang SC, sans-serif";
