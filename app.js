@@ -470,7 +470,10 @@ els.closeShareBtn.addEventListener("click", () => {
 });
 
 els.shareModal.addEventListener("click", (event) => {
-  if (isWeChat) return;
+  if (isWeChat) {
+    els.shareModal.hidden = true;
+    return;
+  }
   if (event.target === els.shareModal) {
     els.shareModal.hidden = true;
   }
