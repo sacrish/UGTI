@@ -39,8 +39,12 @@ const els = {
   shareModal: document.querySelector("#shareModal"),
   closeShareBtn: document.querySelector("#closeShareBtn"),
   shareImage: document.querySelector("#shareImage"),
-  downloadShare: document.querySelector("#downloadShare")
+  downloadShare: document.querySelector("#downloadShare"),
+  wechatTip: document.querySelector("#wechatTip"),
+  screenshotHint: document.querySelector("#screenshotHint")
 };
+
+const isWeChat = isWeChatBrowser();
 
 function showView(view) {
   [els.welcomeView, els.quizView, els.resultView].forEach((item) => {
@@ -148,6 +152,29 @@ function renderResult() {
   els.resultImage.alt = `${state.result.name} 人格形象图片`;
   UGTI_QR.drawToCanvas(els.resultQr, getQrTargetUrl());
   syncStageHeight();
+}
+
+function isWeChatBrowser() {
+  return /MicroMessenger/i.test(window.navigator.userAgent);
+}
+
+function showWeChatTip() {
+  if (!isWeChat || !els.wechatTip) return;
+  els.wechatTip.hidden = false;
+  window.setTimeout(syncStageHeight, 0);
+}
+
+function hideWeChatTip() {
+  if (!els.wechatTip || els.wechatTip.hidden) return;
+  els.wechatTip.hidden = true;
+}
+
+function showScreenshotHint() {
+  if (!els.screenshotHint) return;
+  els.screenshotHint.hidden = false;
+  window.setTimeout(() => {
+    els.screenshotHint.hidden = true;
+  }, 1800);
 }
 
 function getResultImagePath(result) {
@@ -424,7 +451,11 @@ els.shareBtn.addEventListener("click", async () => {
     state.shareUrl = await generateShareImage();
     els.shareImage.src = state.shareUrl;
     els.downloadShare.href = state.shareUrl;
+    els.shareModal.classList.toggle("wechat-share-mode", isWeChat);
     els.shareModal.hidden = false;
+    if (isWeChat) {
+      showScreenshotHint();
+    }
   } catch (error) {
     console.error("分享图生成失败：", error);
     window.alert("分享图生成失败，请刷新页面后重试。");
@@ -439,10 +470,18 @@ els.closeShareBtn.addEventListener("click", () => {
 });
 
 els.shareModal.addEventListener("click", (event) => {
+  if (isWeChat) return;
   if (event.target === els.shareModal) {
     els.shareModal.hidden = true;
   }
 });
+
+if (els.wechatTip) {
+  els.wechatTip.addEventListener("click", hideWeChatTip);
+}
+
+document.addEventListener("click", hideWeChatTip);
+showWeChatTip();
 
 window.addEventListener("resize", syncStageHeight);
 window.addEventListener("load", syncStageHeight);

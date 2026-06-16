@@ -484,6 +484,42 @@ a {
   animation: floatA 7s ease-in-out infinite reverse;
 }
 
+.wechat-tip {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(23, 19, 15, 0.38);
+  backdrop-filter: blur(8px);
+}
+
+.wechat-tip[hidden] {
+  display: none;
+}
+
+.wechat-tip-card {
+  width: min(100%, 420px);
+  padding: 24px 26px;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(56, 215, 255, 0.42), transparent 7rem),
+    radial-gradient(circle at 92% 18%, rgba(184, 240, 66, 0.48), transparent 8rem),
+    linear-gradient(135deg, #fff8ef 0%, #fff 58%, #f5f0ff 100%);
+  box-shadow: 10px 10px 0 var(--ink), var(--shadow);
+  text-align: center;
+}
+
+.wechat-tip-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(18px, 4vw, 24px);
+  line-height: 1.55;
+  font-weight: 950;
+}
+
 .share-modal {
   position: fixed;
   inset: 0;
@@ -511,6 +547,56 @@ a {
   border-radius: 16px;
   background: #fff;
   box-shadow: var(--shadow);
+}
+
+.screenshot-hint {
+  position: fixed;
+  left: 50%;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 11;
+  margin: 0;
+  padding: 10px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: rgba(255, 248, 239, 0.94);
+  box-shadow: 5px 5px 0 var(--ink);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 950;
+  transform: translateX(-50%);
+}
+
+.screenshot-hint[hidden] {
+  display: none;
+}
+
+.share-modal.wechat-share-mode {
+  padding: 0;
+  background: #17130f;
+}
+
+.share-modal.wechat-share-mode .share-dialog {
+  width: 100vw;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+
+.share-modal.wechat-share-mode .share-dialog img {
+  width: auto;
+  max-width: 100vw;
+  height: auto;
+  max-height: 100dvh;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  object-fit: contain;
+}
+
+.share-modal.wechat-share-mode .close-btn,
+.share-modal.wechat-share-mode #downloadShare {
+  display: none;
 }
 
 .close-btn {
