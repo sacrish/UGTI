@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="application-name" content="University Student Type Indicator" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试结果 · USTI 大学生人格类型测试</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=20260905-usti-no-ads" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage" aria-live="polite">
+        <div class="geo geo-a"></div>
+        <div class="geo geo-b"></div>
+        <div class="geo geo-c"></div>
+
+        <header class="topbar">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="./assets/logo.svg" alt="" />
+          </div>
+          <div>
+            <p class="brand-title" title="University Student Type Indicator">USTI</p>
+            <p class="brand-subtitle">大学生人格类型测试</p>
+          </div>
+        </header>
+
+        <section id="resultView" class="view view-active">
+          <article id="resultCard" class="result-card">
+            <div class="result-visual">
+              <img id="resultImage" alt="人格形象图片" />
+            </div>
+            <div class="result-copy">
+              <p id="resultNamePrefix" class="result-name-prefix"></p>
+              <h2 id="resultName"></h2>
+              <div id="resultTags" class="tags"></div>
+              <div id="resultPortrait" class="portrait"></div>
+              <p id="resultSlogan" class="slogan"></p>
+              <p class="blessing">测试仅供娱乐，愿每一位大学生都不被标签束缚，在校园里勇敢探索、自在成长；初入大学的你，也能找到自己的节奏与热爱！</p>
+            </div>
+          </article>
+
+          <div class="result-actions">
+            <button id="shareBtn" class="primary-btn" type="button">分享结果</button>
+            <button id="restartBtn" class="ghost-btn" type="button">重新测试</button>
+          </div>
+          <footer class="credit result-credit">
+            <span>Developed By</span>
+            <span>大连东软信息学院 数字艺术与设计学院</span>
+            <span>动画与数字媒体艺术系</span>
+          </footer>
+        </section>
+      </section>
+    </main>
+
+    <div id="shareModal" class="share-modal" hidden>
+      <div class="share-dialog" role="dialog" aria-modal="true" aria-label="分享图片预览">
+        <button id="closeShareBtn" class="close-btn" type="button" aria-label="关闭分享图片">×</button>
+        <img id="shareImage" class="share-preview" alt="测试结果分享图" />
+        <a id="downloadShare" class="primary-btn" download="USTI-大学生人格类型测试.png">保存图片</a>
+      </div>
+    </div>
+
+    <script src="./config/content.js?v=20260905-usti-no-ads"></script>
+    <script src="./app.js?v=20260905-usti-no-ads"></script>
+  </body>
+</html>

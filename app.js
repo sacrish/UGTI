@@ -43,7 +43,7 @@ const els = {
 };
 
 function showView(view) {
-  [els.welcomeView, els.quizView, els.resultView].forEach((item) => {
+  [els.welcomeView, els.quizView, els.resultView].filter(Boolean).forEach((item) => {
     item.classList.toggle("view-active", item === view);
   });
   syncStageHeight();
@@ -88,25 +88,44 @@ function renderQuestion() {
       button.type = "button";
       button.className = `option-btn${chosen === index ? " selected" : ""}`;
       button.textContent = option.label;
-      button.addEventListener("click", () => selectOption(index));
+      button?.addEventListener("click", () => selectOption(index));
       return button;
     })
   );
   syncStageHeight();
 }
 
+let advanceTimer;
 function selectOption(index) {
+  window.clearTimeout(advanceTimer);
   state.answers[state.current] = index;
   renderQuestion();
-  window.setTimeout(() => {
-    if (state.current < questions.length - 1) {
-      state.current += 1;
-      renderQuestion();
-    } else {
-      renderResult();
-      showView(els.resultView);
-    }
+  const current = state.current;
+  if (current === questions.length - 1) {
+    window.requestAnimationFrame(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"
+      });
+    });
+    return;
+  }
+  advanceTimer = window.setTimeout(() => {
+    if (state.current !== current) return;
+    state.current += 1;
+    renderQuestion();
   }, 220);
+}
+
+function openResultPage() {
+  if (!questions.every((question, i) => Number.isInteger(state.answers[i]) && question.options[state.answers[i]])) return;
+  try {
+    sessionStorage.setItem("usti-result", JSON.stringify({ nickname: state.nickname, answers: state.answers }));
+  } catch (error) {
+    window.alert("无法保存测试结果，请允许浏览器使用网站存储后重试。你的答案仍保留在本页。");
+    return;
+  }
+  window.location.assign("./result.html");
 }
 
 function calculateResult() {
@@ -371,11 +390,11 @@ function renderShareCanvas({ resultImage, qrImage }) {
   return canvas;
 }
 
-els.nickname.addEventListener("input", () => {
+els.nickname?.addEventListener("input", () => {
   els.startBtn.disabled = els.nickname.value.trim().length === 0;
 });
 
-els.startForm.addEventListener("submit", (event) => {
+els.startForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   state.nickname = els.nickname.value.trim();
   if (!state.nickname) return;
@@ -385,35 +404,31 @@ els.startForm.addEventListener("submit", (event) => {
   showView(els.quizView);
 });
 
-els.prevBtn.addEventListener("click", () => {
+els.prevBtn?.addEventListener("click", () => {
+  window.clearTimeout(advanceTimer);
   if (state.current > 0) {
     state.current -= 1;
     renderQuestion();
   }
 });
 
-els.nextBtn.addEventListener("click", () => {
+els.nextBtn?.addEventListener("click", () => {
+  window.clearTimeout(advanceTimer);
   if (state.answers[state.current] === null) return;
   if (state.current < questions.length - 1) {
     state.current += 1;
     renderQuestion();
   } else {
-    renderResult();
-    showView(els.resultView);
+    openResultPage();
   }
 });
 
-els.restartBtn.addEventListener("click", () => {
-  state.nickname = "";
-  state.current = 0;
-  state.answers = Array(questions.length).fill(null);
-  state.result = null;
-  els.nickname.value = "";
-  els.startBtn.disabled = true;
-  showView(els.welcomeView);
+els.restartBtn?.addEventListener("click", () => {
+  try { sessionStorage.removeItem("usti-result"); } catch (error) { /* Navigation still works if storage is blocked. */ }
+  window.location.assign("./index.html");
 });
 
-els.shareBtn.addEventListener("click", async () => {
+els.shareBtn?.addEventListener("click", async () => {
   els.shareBtn.disabled = true;
   const originalText = els.shareBtn.textContent;
   els.shareBtn.textContent = "生成中...";
@@ -435,15 +450,34 @@ els.shareBtn.addEventListener("click", async () => {
   }
 });
 
-els.closeShareBtn.addEventListener("click", () => {
+els.closeShareBtn?.addEventListener("click", () => {
   els.shareModal.hidden = true;
 });
 
-els.shareModal.addEventListener("click", (event) => {
+els.shareModal?.addEventListener("click", (event) => {
   if (event.target === els.shareModal) {
     els.shareModal.hidden = true;
   }
 });
 
-window.addEventListener("resize", syncStageHeight);
-window.addEventListener("load", syncStageHeight);
+window?.addEventListener("resize", syncStageHeight);
+window?.addEventListener("load", syncStageHeight);
+
+// Results persist within this tab so refreshing the result page remains useful.
+if (els.resultView) {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem("usti-result"));
+    if (!saved || typeof saved.nickname !== "string" || !saved.nickname.trim() ||
+        saved.nickname.length > 16 || !Array.isArray(saved.answers) ||
+        saved.answers.length !== questions.length ||
+        !questions.every((question, i) => Number.isInteger(saved.answers[i]) && question.options[saved.answers[i]])) {
+      throw new Error("Missing or invalid result");
+    }
+    state.nickname = saved.nickname;
+    state.answers = saved.answers;
+    renderResult();
+    showView(els.resultView);
+  } catch (error) {
+    window.location.replace("./index.html");
+  }
+}
