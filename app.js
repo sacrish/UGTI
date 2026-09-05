@@ -2,7 +2,6 @@ const config = window.USTI_CONFIG;
 const questions = config.questions;
 const results = config.results;
 const resultOrder = config.resultOrder;
-const qrCodePath = "./assets/qr.png";
 
 const state = {
   nickname: "",
@@ -34,6 +33,9 @@ const els = {
   resultTags: document.querySelector("#resultTags"),
   resultPortrait: document.querySelector("#resultPortrait"),
   resultSlogan: document.querySelector("#resultSlogan"),
+  resultQr: document.querySelector("#resultQr"),
+  wechatTip: document.querySelector("#wechatTip"),
+  screenshotHint: document.querySelector("#screenshotHint"),
   restartBtn: document.querySelector("#restartBtn"),
   shareBtn: document.querySelector("#shareBtn"),
   shareModal: document.querySelector("#shareModal"),
@@ -41,6 +43,8 @@ const els = {
   shareImage: document.querySelector("#shareImage"),
   downloadShare: document.querySelector("#downloadShare")
 };
+
+const isWeChat = isWeChatBrowser();
 
 function showView(view) {
   [els.welcomeView, els.quizView, els.resultView].filter(Boolean).forEach((item) => {
@@ -165,7 +169,31 @@ function renderResult() {
   els.resultSlogan.textContent = state.result.slogan;
   els.resultImage.src = withCacheBust(imagePath);
   els.resultImage.alt = `${state.result.name} 人格形象图片`;
+  USTI_QR.drawToCanvas(els.resultQr, getQrTargetUrl());
   syncStageHeight();
+}
+
+function isWeChatBrowser() {
+  return /MicroMessenger/i.test(window.navigator.userAgent);
+}
+
+function showWeChatTip() {
+  if (!isWeChat || !els.wechatTip) return;
+  els.wechatTip.hidden = false;
+  window.setTimeout(syncStageHeight, 0);
+}
+
+function hideWeChatTip() {
+  if (!els.wechatTip || els.wechatTip.hidden) return;
+  els.wechatTip.hidden = true;
+}
+
+function showScreenshotHint() {
+  if (!els.screenshotHint) return;
+  els.screenshotHint.hidden = false;
+  window.setTimeout(() => {
+    els.screenshotHint.hidden = true;
+  }, 1800);
 }
 
 function getResultImagePath(result) {
@@ -188,6 +216,14 @@ function withCacheBust(src) {
   if (src.startsWith("data:")) return src;
   const separator = src.includes("?") ? "&" : "?";
   return `${src}${separator}v=${Date.now()}`;
+}
+
+// Point scanners to the test entry page, never the session-dependent result page.
+function getQrTargetUrl() {
+  const url = new URL("./", window.location.href);
+  url.search = "";
+  url.hash = "";
+  return url.toString();
 }
 
 function stripMarkdown(value) {
@@ -277,15 +313,12 @@ function canvasToPngUrl(canvas) {
 }
 
 async function generateShareImage() {
-  const [resultImage, qrImage] = await Promise.all([
-    loadImage(withCacheBust(getResultImagePath(state.result))),
-    loadImage(withCacheBust(qrCodePath))
-  ]);
-  const canvas = renderShareCanvas({ resultImage, qrImage });
+  const resultImage = await loadImage(withCacheBust(getResultImagePath(state.result)));
+  const canvas = renderShareCanvas({ resultImage });
   return canvasToPngUrl(canvas);
 }
 
-function renderShareCanvas({ resultImage, qrImage }) {
+function renderShareCanvas({ resultImage }) {
   const canvas = document.createElement("canvas");
   canvas.width = 900;
   canvas.height = 1320;
@@ -360,9 +393,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
   ctx.font = "900 28px Microsoft YaHei, PingFang SC, sans-serif";
   drawWrappedText(ctx, result.slogan, 166, 922, 430, 36, 2);
 
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(646, 864, 118, 118);
-  ctx.drawImage(qrImage, 646, 864, 118, 118);
+  USTI_QR.drawToContext(ctx, getQrTargetUrl(), 646, 864, 118);
   ctx.fillStyle = "#302653";
   ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText("扫码来测你的 USTI", 610, 1004);
@@ -440,7 +471,9 @@ els.shareBtn?.addEventListener("click", async () => {
     state.shareUrl = await generateShareImage();
     els.shareImage.src = state.shareUrl;
     els.downloadShare.href = state.shareUrl;
+    els.shareModal.classList.toggle("wechat-share-mode", isWeChat);
     els.shareModal.hidden = false;
+    if (isWeChat) showScreenshotHint();
   } catch (error) {
     console.error("分享图生成失败：", error);
     window.alert("分享图生成失败，请刷新页面后重试。");
@@ -455,10 +488,14 @@ els.closeShareBtn?.addEventListener("click", () => {
 });
 
 els.shareModal?.addEventListener("click", (event) => {
-  if (event.target === els.shareModal) {
+  if (isWeChat || event.target === els.shareModal) {
     els.shareModal.hidden = true;
   }
 });
+
+els.wechatTip?.addEventListener("click", hideWeChatTip);
+document.addEventListener("click", hideWeChatTip);
+showWeChatTip();
 
 window?.addEventListener("resize", syncStageHeight);
 window?.addEventListener("load", syncStageHeight);
