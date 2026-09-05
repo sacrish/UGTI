@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --bg: #fff8ef;
+  --bg: #f3f5f0;
   --ink: #17130f;
   --muted: #6f665c;
   --panel: rgba(255, 255, 255, 0.84);
@@ -580,4 +580,131 @@ a {
     animation-duration: 1ms !important;
     transition-duration: 1ms !important;
   }
+}
+/* USTI campus journal visual system */
+:root { --ink: #203c42; --muted: #627577; --panel: #fff; --line: #dbe4df; --coral: #216653; --lime: #e9f1e9; --cyan: #e9f1e9; --violet: #216653; --yellow: #f8f3e8; --shadow: 0 18px 60px #203c420d; }
+body { background: #f3f5f0; }
+.app-shell { padding: 32px; }
+.stage { width: min(100%, 1080px); border: 1px solid var(--line); border-radius: 28px; background: #fcfdf9; }
+.topbar { padding: 24px 40px; border-bottom: 1px solid var(--line); }
+.topbar::after { content: "CAMPUS / SELF DISCOVERY"; margin-left: auto; color: var(--muted); font-size: 10px; letter-spacing: 2px; }
+.brand-mark, .brand-mark img { width: 40px; height: 40px; filter: none; }
+.brand-title { font-size: 20px; font-weight: 800; letter-spacing: 3px; }
+.brand-subtitle { font-size: 12px; font-weight: 400; }
+.view { inset: 120px 48px 36px; display: none; transform: none; }
+.view-active { display: grid; }
+.welcome-content { grid-template-columns: 1.2fr .8fr; gap: 56px; }
+#welcomeView { padding-bottom: 80px; }
+.hero-copy::before { content: "发现自己 · 从校园开始"; display: block; margin-bottom: 24px; color: var(--coral); font-size: 13px; letter-spacing: 3px; }
+.hero-copy h1 { font-size: clamp(32px, 4vw, 48px); line-height: 1.35; font-weight: 750; letter-spacing: -1px; }
+.hero-copy p { font-size: 17px; font-weight: 400; line-height: 1.9; }
+.hero-copy p + p { font-size: 13px; max-width: 360px; }
+.credit { color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.5; }
+.credit span:first-child { text-transform: uppercase; letter-spacing: 2px; font-size: 9px; }
+.start-form, .question-card, .result-card { border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); background: white; }
+.start-form { padding: 32px; }
+.start-form::before { content: "你的校园探索手册"; display: block; padding-bottom: 22px; margin-bottom: 24px; border-bottom: 1px solid var(--line); font-size: 19px; font-weight: 700; }
+.start-form label { font-size: 13px; font-weight: 500; }
+.start-form input { height: 52px; border: 1px solid #bccdc5; border-radius: 10px; background: #fafcf9; color: var(--ink); font-size: 16px; font-weight: 500; }
+.start-form input:focus { box-shadow: 0 0 0 3px #21665320; }
+button:focus-visible, a:focus-visible { outline: 3px solid #b77e35; outline-offset: 4px; }
+.primary-btn, .ghost-btn { padding: 12px 20px; border: 1px solid var(--line); border-radius: 10px; font-size: 15px; font-weight: 650; box-shadow: none; }
+.primary-btn { color: #fff; border-color: var(--coral); }
+.primary-btn:not(:disabled):hover { background: #174e3f; transform: translateY(-2px); box-shadow: none; }
+.ghost-btn:not(:disabled):hover { background: var(--lime); transform: none; box-shadow: none; }
+.progress-meta { font-size: 12px; font-weight: 500; }
+.progress-track { height: 5px; border: 0; background: #e0e8e2; }
+.progress-bar { background: var(--coral); }
+.question-index { color: var(--coral); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+.question-card h2 { font-size: clamp(23px, 3vw, 32px); line-height: 1.5; font-weight: 650; }
+.options { counter-reset: option; gap: 10px; }
+.option-btn { counter-increment: option; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 12px; background: #fcfdfb; font-size: 15px; font-weight: 500; line-height: 1.6; }
+.option-btn::before { content: counter(option, upper-alpha); display: grid; place-items: center; flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--lime); color: var(--coral); font-size: 12px; }
+.option-btn:hover, .option-btn.selected { background: #edf5ee; border-color: var(--coral); box-shadow: none; transform: none; }
+.option-btn.selected::before { background: var(--coral); color: white; }
+.result-card { grid-template-columns: 260px 1fr; gap: 36px; padding: 32px; }
+.result-visual { padding: 16px; border-radius: 140px 140px 20px 20px; background: var(--lime); }
+#resultImage { border: 0; border-radius: 16px; }
+.result-name-prefix { font-weight: 500; font-size: 13px; margin-bottom: 12px; }
+.result-copy h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.25; }
+.tag { border: 0; border-radius: 24px; padding: 6px 12px; color: var(--coral); font-size: 12px; font-weight: 500; }
+.portrait { color: #435b5e; font-size: 15px; line-height: 1.9; font-weight: 400; }
+.slogan { border-left: 3px solid #b77e35; background: #f8f3e8; font-size: 17px; line-height: 1.7; font-weight: 650; }
+.blessing { font-size: 12px; line-height: 1.9; font-weight: 400; }
+.geo { border: 1px solid #dce6dc; border-radius: 50%; background: transparent; transform: none; animation: none; }
+.geo-a { width: 480px; height: 480px; right: -180px; top: 180px; }
+.geo-b { width: 380px; height: 380px; left: auto; right: -130px; top: 230px; bottom: auto; }
+.geo-c { width: 280px; height: 280px; right: -80px; top: 280px; bottom: auto; }
+.share-modal { overflow-y: auto; padding: 28px; background: #152d37b3; backdrop-filter: blur(8px); }
+.share-dialog img { max-height: calc(100dvh - 140px); object-fit: contain; border: 0; background: #fcfdf9; }
+.close-btn { border: 1px solid var(--line); background: white; font-weight: 400; }
+@media (max-width: 760px) {
+ .app-shell { padding: 0; }
+ .stage { border: 0; border-radius: 0; }
+ .topbar { padding: 20px 22px; }
+ .topbar::after { content: "SELF DISCOVERY"; font-size: 8px; letter-spacing: 1px; }
+ .view { inset: 110px 22px 24px; }
+ .welcome-content, .result-card { grid-template-columns: 1fr; gap: 28px; }
+ #welcomeView { padding-bottom: 90px; }
+ .hero-copy::before { margin-bottom: 16px; font-size: 11px; }
+ .hero-copy h1 { font-size: clamp(30px, 8vw, 42px); }
+ .hero-copy p { margin-top: 18px; font-size: 15px; }
+ .start-form, .result-card { padding: 24px; }
+ .start-form::before { padding-bottom: 16px; margin-bottom: 18px; }
+ .result-visual { width: 220px; justify-self: center; }
+ .quiz-nav, .result-actions { padding: 12px 0; background: #fcfdf9f5; }
+ .option-btn { padding: 12px; font-size: 14px; }
+}
+/* Playful campus sticker theme */
+:root { --ink: #302653; --muted: #746582; --coral: #7050dc; --lime: #fff1a9; --cyan: #e5ddff; --violet: #7050dc; --line: #ded3f1; --shadow: 0 14px 35px #7050dc12; }
+body { background: radial-gradient(circle at 10% 14%, #ffe5ed 0, transparent 35%), radial-gradient(circle at 90% 80%, #dceeff 0, transparent 35%), #fff8df; }
+.stage { background: #fffdf5; border: 2px solid #d9cbed; border-radius: 32px; box-shadow: 0 20px 70px #58418b16; }
+.topbar { border-bottom: 2px dashed #e7dcf1; }
+.topbar::after { content: "HELLO, CAMPUS! ✦"; color: #7050dc; font-weight: 800; letter-spacing: 2px; }
+.brand-title { color: #7050dc; }
+.hero-copy::before { content: "✦ 青春不设限，快乐做自己"; display: inline-block; padding: 9px 16px; border-radius: 6px; background: #fff1a9; color: #67431f; transform: rotate(-3deg); font-weight: 750; letter-spacing: 1px; }
+.hero-copy h1 { color: #302653; line-height: 1.35; }
+.hero-copy p { color: #746582; }
+.start-form { position: relative; border: 2px solid #dfcffa; background: #f6f0ff; box-shadow: 7px 8px 0 #e4d7f7; transform: rotate(1deg); }
+.start-form::after { content: "LET’S GO!"; position: absolute; top: -20px; right: 18px; padding: 8px 15px; background: #ffcedf; color: #8b3156; border: 2px solid #fff; border-radius: 30px; transform: rotate(9deg); font-size: 12px; font-weight: 850; letter-spacing: 1px; }
+.start-form::before { content: "校园探索，出发！"; border-bottom: 2px dashed #dfcffa; font-size: 18px; }
+.start-form input { background: white; border: 2px solid #d9cbed; border-radius: 14px; }
+.start-form input:focus { box-shadow: 0 0 0 4px #ffd8e680; }
+.primary-btn, .ghost-btn { border-radius: 16px; font-weight: 750; border-width: 2px; }
+.primary-btn { background: #7050dc; border-color: #7050dc; box-shadow: 0 4px 0 #5139a7; }
+.primary-btn:not(:disabled):hover { background: #805fea; transform: translateY(-3px); box-shadow: 0 7px 0 #5139a7; }
+.primary-btn:not(:disabled):active { transform: translateY(2px); box-shadow: 0 1px 0 #5139a7; }
+.ghost-btn { background: #fff5cf; border-color: #efdfa4; }
+.ghost-btn:not(:disabled):hover { background: #ffedaa; transform: translateY(-2px); }
+.progress-track { height: 10px; background: #eee6f7; }
+.progress-bar { background: linear-gradient(90deg, #9e82f0, #e890c3, #f4bf5a); }
+.question-card { border: 2px solid #e1d4f2; box-shadow: 6px 7px 0 #eee4f6; border-radius: 24px; }
+.question-index { display: inline-block; width: fit-content; padding: 7px 12px; border-radius: 8px; background: #fff1a9; color: #76571c; transform: rotate(-2deg); }
+.option-btn { border: 2px solid #e6dff0; background: #fff; border-radius: 16px; }
+.option-btn::before { background: #e9e0ff; color: #7050dc; font-weight: 800; border-radius: 9px; }
+.option-btn:nth-child(2n)::before { background: #ffe0eb; color: #a4466c; }
+.option-btn:nth-child(3n)::before { background: #dceeff; color: #316b9e; }
+.option-btn:hover, .option-btn.selected { background: #f3ecff; border-color: #9d7be2; transform: translateX(3px); }
+.option-btn.selected::before { background: #7050dc; color: white; }
+.result-card { border: 2px solid #e1d4f2; box-shadow: 7px 8px 0 #eee4f6; }
+.result-visual { background: #ffebad; border-radius: 36px; transform: rotate(-3deg); border: 3px solid #fff; box-shadow: 4px 5px 0 #f1d98d; }
+#resultImage { transform: rotate(3deg); }
+.result-copy h2 { color: #7050dc; }
+.tag { background: #eee4ff; color: #6a43a6; font-weight: 650; }
+.tag:nth-child(2n) { background: #ffe0eb; color: #943858; }
+.tag:nth-child(3n) { background: #dceeff; color: #316b9e; }
+.slogan { background: #fff2bb; border-left: 4px solid #edb34c; border-radius: 0 14px 14px 0; }
+.geo { border: 0; opacity: .7; }
+.geo-a { width: 170px; height: 170px; right: -50px; top: 140px; background: #ffe0eb; border-radius: 35px; transform: rotate(20deg); }
+.geo-b { width: 120px; height: 120px; left: 24px; right: auto; top: auto; bottom: 28px; background: #e9e0ff; border-radius: 50%; }
+.geo-c { width: 80px; height: 80px; right: 35px; top: auto; bottom: 35px; background: #ffec9e; clip-path: polygon(50% 0,61% 35%,100% 50%,65% 62%,50% 100%,38% 65%,0 50%,35% 38%); }
+.share-modal { background: #302653aa; }
+.close-btn { background: #ffe0eb; color: #6a3158; border-color: #fff; }
+@media (max-width: 760px) {
+ .stage { border: 0; border-radius: 0; }
+ .topbar::after { content: "HELLO, CAMPUS!"; font-size: 8px; letter-spacing: 1px; }
+ .hero-copy::before { font-size: 11px; }
+ .start-form { margin: 8px 3px 0; }
+ .quiz-nav, .result-actions { background: #fffdf5f5; }
+ .result-visual { margin: 4px 0 12px; }
 }

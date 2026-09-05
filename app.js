@@ -222,21 +222,21 @@ function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
 
 function drawShareBackground(ctx, width, height) {
   const bg = ctx.createLinearGradient(0, 0, width, height);
-  bg.addColorStop(0, "#fff8ef");
+  bg.addColorStop(0, "#fff8df");
   bg.addColorStop(0.48, "#ffffff");
-  bg.addColorStop(1, "#f5f0ff");
+  bg.addColorStop(1, "#f7edff");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, width, height);
 
   const blueGlow = ctx.createRadialGradient(110, 180, 10, 110, 180, 360);
-  blueGlow.addColorStop(0, "rgba(56, 215, 255, 0.46)");
-  blueGlow.addColorStop(1, "rgba(56, 215, 255, 0)");
+  blueGlow.addColorStop(0, "rgba(237, 142, 191, 0.22)");
+  blueGlow.addColorStop(1, "rgba(237, 142, 191, 0)");
   ctx.fillStyle = blueGlow;
   ctx.fillRect(0, 0, width, height);
 
   const limeGlow = ctx.createRadialGradient(width - 90, 140, 10, width - 90, 140, 330);
-  limeGlow.addColorStop(0, "rgba(184, 240, 66, 0.48)");
-  limeGlow.addColorStop(1, "rgba(184, 240, 66, 0)");
+  limeGlow.addColorStop(0, "rgba(153, 124, 230, 0.18)");
+  limeGlow.addColorStop(1, "rgba(153, 124, 230, 0)");
   ctx.fillStyle = limeGlow;
   ctx.fillRect(0, 0, width, height);
 }
@@ -275,37 +275,37 @@ function renderShareCanvas({ resultImage, qrImage }) {
 
   drawShareBackground(ctx, canvas.width, canvas.height);
 
-  ctx.fillStyle = "rgba(255, 248, 239, 0.9)";
-  ctx.strokeStyle = "#17130f";
-  ctx.lineWidth = 4;
+  ctx.fillStyle = "#fffdf5";
+  ctx.strokeStyle = "#302653";
+  ctx.lineWidth = 1;
   roundedRect(ctx, 36, 36, 828, 1248, 24, true, true);
 
-  ctx.fillStyle = "#17130f";
+  ctx.fillStyle = "#302653";
   ctx.font = "900 36px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText("USTI 大学生人格类型测试", 96, 132);
 
-  ctx.fillStyle = "rgba(255, 91, 74, 0.22)";
+  ctx.fillStyle = "#e8daf8";
   roundedRect(ctx, 106, 196, 708, 830, 18, true, false);
 
   const cardBg = ctx.createLinearGradient(96, 186, 804, 1016);
-  cardBg.addColorStop(0, "#fffaf1");
+  cardBg.addColorStop(0, "#fffdf5");
   cardBg.addColorStop(0.58, "#ffffff");
-  cardBg.addColorStop(1, "#eefbff");
+  cardBg.addColorStop(1, "#faf3ff");
   ctx.fillStyle = cardBg;
-  ctx.strokeStyle = "#17130f";
-  ctx.lineWidth = 4;
+  ctx.strokeStyle = "#302653";
+  ctx.lineWidth = 1;
   roundedRect(ctx, 96, 186, 708, 830, 18, true, true);
 
   ctx.fillStyle = "#fff";
-  ctx.strokeStyle = "#17130f";
-  ctx.lineWidth = 4;
+  ctx.strokeStyle = "#302653";
+  ctx.lineWidth = 1;
   roundedRect(ctx, 136, 238, 260, 260, 18, true, true);
   ctx.drawImage(resultImage, 140, 242, 252, 252);
 
-  ctx.fillStyle = "#6f665c";
+  ctx.fillStyle = "#746582";
   ctx.font = "900 24px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText(`${state.nickname} 的大学人格是`, 436, 268);
-  ctx.fillStyle = "#17130f";
+  ctx.fillStyle = "#302653";
   ctx.font = "900 62px Microsoft YaHei, PingFang SC, sans-serif";
   const titleBottom = drawWrappedText(ctx, result.name, 436, 346, 310, 68, 2);
 
@@ -319,36 +319,36 @@ function renderShareCanvas({ resultImage, qrImage }) {
       x = 436;
       y += 56;
     }
-    ctx.fillStyle = "#38d7ff";
-    ctx.strokeStyle = "#17130f";
-    ctx.lineWidth = 4;
+    ctx.fillStyle = "#eee4ff";
+    ctx.strokeStyle = "#302653";
+    ctx.lineWidth = 1;
     roundedRect(ctx, x, y, width, 42, 8, true, true);
-    ctx.fillStyle = "#17130f";
+    ctx.fillStyle = "#302653";
     ctx.fillText(tag, x + 14, y + 28);
     tagBottom = Math.max(tagBottom, y + 42);
     x += width + 12;
   });
 
   ctx.font = "700 27px Microsoft YaHei, PingFang SC, sans-serif";
-  ctx.fillStyle = "#312b25";
+  ctx.fillStyle = "#594b6f";
   drawWrappedText(ctx, result.portrait, 136, Math.max(554, tagBottom + 34), 608, 48, 6);
 
-  ctx.fillStyle = "rgba(255, 216, 79, 0.42)";
+  ctx.fillStyle = "#fff2bb";
   ctx.fillRect(136, 888, 500, 82);
-  ctx.fillStyle = "#ff5b4a";
+  ctx.fillStyle = "#edb34c";
   ctx.fillRect(136, 888, 8, 82);
-  ctx.fillStyle = "#17130f";
+  ctx.fillStyle = "#302653";
   ctx.font = "900 28px Microsoft YaHei, PingFang SC, sans-serif";
   drawWrappedText(ctx, result.slogan, 166, 922, 430, 36, 2);
 
   ctx.fillStyle = "#fff";
   ctx.fillRect(646, 864, 118, 118);
   ctx.drawImage(qrImage, 646, 864, 118, 118);
-  ctx.fillStyle = "#17130f";
+  ctx.fillStyle = "#302653";
   ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.fillText("扫码来测你的 USTI", 610, 1004);
 
-  ctx.fillStyle = "#6f665c";
+  ctx.fillStyle = "#746582";
   ctx.font = "700 22px Microsoft YaHei, PingFang SC, sans-serif";
   drawWrappedText(
     ctx,
@@ -360,7 +360,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
     3
   );
 
-  ctx.fillStyle = "rgba(23, 19, 15, 0.58)";
+  ctx.fillStyle = "#746582";
   ctx.font = "800 18px Microsoft YaHei, PingFang SC, sans-serif";
   ctx.textAlign = "center";
   ctx.fillText("Developed By", canvas.width / 2, 1204);
