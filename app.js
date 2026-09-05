@@ -19,6 +19,8 @@ const els = {
   startForm: document.querySelector("#startForm"),
   nickname: document.querySelector("#nickname"),
   startBtn: document.querySelector("#startBtn"),
+  participantCount: document.querySelector("#participantCount"),
+  participantCountValue: document.querySelector("#participantCountValue"),
   questionIndex: document.querySelector("#questionIndex"),
   questionTitle: document.querySelector("#questionTitle"),
   options: document.querySelector("#options"),
@@ -129,7 +131,35 @@ function openResultPage() {
     window.alert("无法保存测试结果，请允许浏览器使用网站存储后重试。你的答案仍保留在本页。");
     return;
   }
+  trackTestCompletion();
   window.location.assign("./result.html");
+}
+
+function trackTestCompletion() {
+  if (window.goatcounter?.count) {
+    window.goatcounter.count({
+      path: "test-completed",
+      title: "USTI 测试完成",
+      event: true
+    });
+  }
+}
+
+async function loadParticipantCount() {
+  if (!els.participantCount || !els.participantCountValue || typeof fetch !== "function") return;
+  try {
+    const response = await fetch("https://zak.goatcounter.com/counter/test-completed.json", {
+      headers: { Accept: "application/json" }
+    });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (typeof data.count !== "string" && typeof data.count !== "number") return;
+    els.participantCountValue.textContent = String(data.count);
+    els.participantCount.hidden = false;
+    syncStageHeight();
+  } catch (error) {
+    // The public counter can be disabled or blocked without affecting the test.
+  }
 }
 
 function calculateResult() {
@@ -496,6 +526,7 @@ els.shareModal?.addEventListener("click", (event) => {
 els.wechatTip?.addEventListener("click", hideWeChatTip);
 document.addEventListener("click", hideWeChatTip);
 showWeChatTip();
+loadParticipantCount();
 
 window?.addEventListener("resize", syncStageHeight);
 window?.addEventListener("load", syncStageHeight);

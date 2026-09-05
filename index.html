@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>USTI 大学生人格类型测试</title>
     <link rel="icon" href="./assets/favicon.svg?v=20260905-usti-master-sync" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260905-usti-master-sync" />
+    <link rel="stylesheet" href="./styles.css?v=20260905-usti-goatcounter" />
   </head>
   <body>
     <main class="app-shell">
@@ -36,6 +36,10 @@
               <label for="nickname">你的称呼</label>
               <input id="nickname" type="text" maxlength="16" autocomplete="nickname" placeholder="例如：阿晴" />
               <button id="startBtn" class="primary-btn" type="submit" disabled>开始测试</button>
+              <p id="participantCount" class="participant-count" aria-live="polite" hidden>
+                <span aria-hidden="true">✦</span>
+                已有 <strong id="participantCountValue"></strong> 位同学完成测试
+              </p>
             </form>
           </div>
           <footer class="credit">
@@ -79,6 +83,8 @@
     </div>
 
     <script src="./config/content.js?v=20260905-usti-master-sync"></script>
-    <script src="./app.js?v=20260905-usti-master-sync"></script>
+    <script data-goatcounter="https://zak.goatcounter.com/count"
+      async src="//gc.zgo.at/count.js"></script>
+    <script src="./app.js?v=20260905-usti-goatcounter"></script>
   </body>
 </html>

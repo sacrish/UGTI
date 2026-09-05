@@ -670,6 +670,10 @@ body { background: radial-gradient(circle at 10% 14%, #ffe5ed 0, transparent 35%
 .start-form::before { content: "校园探索，出发！"; border-bottom: 2px dashed #dfcffa; font-size: 18px; }
 .start-form input { background: white; border: 2px solid #d9cbed; border-radius: 14px; }
 .start-form input:focus { box-shadow: 0 0 0 4px #ffd8e680; }
+.participant-count { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 18px 0 0; color: #89769b; font-size: 12px; line-height: 1.5; }
+.participant-count[hidden] { display: none; }
+.participant-count span { color: #e890c3; }
+.participant-count strong { color: #7050dc; font-size: 14px; font-variant-numeric: tabular-nums; }
 .primary-btn, .ghost-btn { border-radius: 16px; font-weight: 750; border-width: 2px; }
 .primary-btn { background: #7050dc; border-color: #7050dc; box-shadow: 0 4px 0 #5139a7; }
 .primary-btn:not(:disabled):hover { background: #805fea; transform: translateY(-3px); box-shadow: 0 7px 0 #5139a7; }
