@@ -1,4 +1,4 @@
-const config = window.UGTI_CONFIG;
+const config = window.USTI_CONFIG;
 const questions = config.questions;
 const results = config.results;
 const resultOrder = config.resultOrder;
@@ -132,7 +132,7 @@ function calculateResult() {
 function renderResult() {
   state.result = calculateResult();
   const imagePath = getResultImagePath(state.result);
-  els.resultNamePrefix.textContent = `${state.nickname} 的毕业人格是`;
+  els.resultNamePrefix.textContent = `${state.nickname} 的大学人格是`;
   els.resultName.textContent = state.result.name;
   els.resultTags.replaceChildren(
     ...state.result.tags.map((tag) => {
@@ -282,7 +282,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
 
   ctx.fillStyle = "#17130f";
   ctx.font = "900 36px Microsoft YaHei, PingFang SC, sans-serif";
-  ctx.fillText("UGTI 大学毕业生人格测试", 96, 132);
+  ctx.fillText("USTI 大学生人格类型测试", 96, 132);
 
   ctx.fillStyle = "rgba(255, 91, 74, 0.22)";
   roundedRect(ctx, 106, 196, 708, 830, 18, true, false);
@@ -304,7 +304,7 @@ function renderShareCanvas({ resultImage, qrImage }) {
 
   ctx.fillStyle = "#6f665c";
   ctx.font = "900 24px Microsoft YaHei, PingFang SC, sans-serif";
-  ctx.fillText(`${state.nickname} 的毕业人格是`, 436, 268);
+  ctx.fillText(`${state.nickname} 的大学人格是`, 436, 268);
   ctx.fillStyle = "#17130f";
   ctx.font = "900 62px Microsoft YaHei, PingFang SC, sans-serif";
   const titleBottom = drawWrappedText(ctx, result.name, 436, 346, 310, 68, 2);
@@ -346,13 +346,13 @@ function renderShareCanvas({ resultImage, qrImage }) {
   ctx.drawImage(qrImage, 646, 864, 118, 118);
   ctx.fillStyle = "#17130f";
   ctx.font = "800 19px Microsoft YaHei, PingFang SC, sans-serif";
-  ctx.fillText("扫码来测你的 UGTI", 610, 1004);
+  ctx.fillText("扫码来测你的 USTI", 610, 1004);
 
   ctx.fillStyle = "#6f665c";
   ctx.font = "700 22px Microsoft YaHei, PingFang SC, sans-serif";
   drawWrappedText(
     ctx,
-    "测试仅供娱乐，希望每一位毕业生都能不被标签束缚，能够肆意洒脱地享受你的人生！",
+    "测试仅供娱乐，愿每一位大学生都不被标签束缚，在校园里勇敢探索、自在成长；初入大学的你，也能找到自己的节奏与热爱！",
     96,
     1110,
     708,

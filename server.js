@@ -56,5 +56,5 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`UGTI app running at http://${host}:${port}`);
+  console.log(`USTI app running at http://${host}:${port}`);
 });

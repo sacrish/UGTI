@@ -2,10 +2,11 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <meta name="application-name" content="University Student Type Indicator" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UGTI 大学毕业生人格测试</title>
+    <title>USTI 大学生人格类型测试</title>
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260612-ugti-share-text-v3" />
+    <link rel="stylesheet" href="./styles.css?v=20260905-usti" />
   </head>
   <body>
     <main class="app-shell">
@@ -19,16 +20,17 @@
             <img src="./assets/logo.svg" alt="" />
           </div>
           <div>
-            <p class="brand-title">UGTI</p>
-            <p class="brand-subtitle">大学毕业生人格测试</p>
+            <p class="brand-title" title="University Student Type Indicator">USTI</p>
+            <p class="brand-subtitle">大学生人格类型测试</p>
           </div>
         </header>
 
         <section id="welcomeView" class="view view-active">
           <div class="welcome-content">
             <div class="hero-copy">
-              <h1>欢迎参加 UGTI 大学毕业生人格测试！</h1>
-              <p>大学四年将要落幕<br />新的人生即要启程<br />测测你是什么大学人格？</p>
+              <h1>欢迎参加 USTI 大学生人格类型测试！</h1>
+              <p>大学生活，有无限可能<br />一起探索属于你的校园节奏<br />测测你是什么大学人格？</p>
+              <p>刚入学也没关系，按你的日常习惯或对校园生活的期待作答就好。</p>
             </div>
             <form id="startForm" class="start-form">
               <label for="nickname">你的称呼</label>
@@ -77,7 +79,7 @@
               <div id="resultTags" class="tags"></div>
               <div id="resultPortrait" class="portrait"></div>
               <p id="resultSlogan" class="slogan"></p>
-              <p class="blessing">测试仅供娱乐，希望每一位毕业生都能不被标签束缚，能够肆意洒脱地享受你的人生！</p>
+              <p class="blessing">测试仅供娱乐，愿每一位大学生都不被标签束缚，在校园里勇敢探索、自在成长；初入大学的你，也能找到自己的节奏与热爱！</p>
             </div>
           </article>
 
@@ -98,11 +100,11 @@
       <div class="share-dialog" role="dialog" aria-modal="true" aria-label="分享图片预览">
         <button id="closeShareBtn" class="close-btn" type="button" aria-label="关闭分享图片">×</button>
         <img id="shareImage" class="share-preview" alt="测试结果分享图" />
-        <a id="downloadShare" class="primary-btn" download="UGTI-大学毕业生人格测试.png">保存图片</a>
+        <a id="downloadShare" class="primary-btn" download="USTI-大学生人格类型测试.png">保存图片</a>
       </div>
     </div>
 
-    <script src="./config/content.js?v=20260612-ugti-share-text-v3"></script>
-    <script src="./app.js?v=20260612-ugti-share-text-v3"></script>
+    <script src="./config/content.js?v=20260905-usti"></script>
+    <script src="./app.js?v=20260905-usti"></script>
   </body>
 </html>
