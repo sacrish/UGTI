@@ -710,6 +710,7 @@ body { background: radial-gradient(circle at 10% 14%, #ffe5ed 0, transparent 35%
 }
 
 /* QR and WeChat support from master, styled for USTI. */
+.result-ad { width: min(100%, 1080px); min-width: 0; margin-top: 24px; }
 .result-qr { display: grid; justify-items: center; gap: 8px; margin-top: 22px; }
 .result-qr canvas { width: 118px; height: 118px; padding: 8px; border: 2px solid var(--line); border-radius: 16px; background: #fff; }
 .result-qr p { margin: 0; color: var(--muted); font-size: 12px; font-weight: 650; }
